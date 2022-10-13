@@ -1,5 +1,6 @@
 package com.tech4dev.wta
 
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -15,8 +16,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var enterTeamB_Score: EditText
     private lateinit var addScoreButton: Button
 
-    private var aScore = 0
-    private var bScore = 0
+    private var aScore = ""
+    private var bScore = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,12 +30,30 @@ class MainActivity : AppCompatActivity() {
         teamB_Score = findViewById(R.id.teamB_Score)
 
         addScoreButton.setOnClickListener{
-            aScore = enterTeamA_Score.text.toString().toInt()
-            bScore = enterTeamB_Score.text.toString().toInt()
+            Toast.makeText(this, "Add Score Button has been clicked", Toast.LENGTH_LONG).show()
+            aScore = enterTeamA_Score.text.toString()
+            bScore = enterTeamB_Score.text.toString()
 
-            Toast.makeText(this, "Team A Score is $aScore\n Team B score is $bScore", Toast.LENGTH_LONG).show()
-            teamA_Score.text = "Team A: $aScore"
-            teamB_Score.text = "Team B: $bScore"
+            if (aScore.isNullOrEmpty()){
+                Toast.makeText(this, "Enter a Valid Number", Toast.LENGTH_LONG).show()
+            }else if (bScore.isNullOrEmpty()){
+                Toast.makeText(this, "Enter a Valid Number", Toast.LENGTH_LONG).show()
+            }else {
+                teamA_Score.text = "Team A: $aScore"
+                teamB_Score.text = "Team B: $bScore"
+
+                var msg = if(aScore.toInt() > bScore.toInt()){
+                    "Team A is the winner"
+                }else {
+                    "Team B is the winner!"
+                }
+
+                var alertDialogue = AlertDialog.Builder(this)
+                alertDialogue.setMessage(msg)
+                    .setTitle("Who is the winner?")
+                    .setPositiveButton("ok", null)
+                    .show()
+            }
         }
     }
 }
