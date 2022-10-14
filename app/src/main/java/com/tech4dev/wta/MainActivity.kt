@@ -39,21 +39,29 @@ class MainActivity : AppCompatActivity() {
             }else if (bScore.isNullOrEmpty()){
                 Toast.makeText(this, "Enter a Valid Number", Toast.LENGTH_LONG).show()
             }else {
-                teamA_Score.text = "Team A: $aScore"
-                teamB_Score.text = "Team B: $bScore"
+                updateScoreBoard()
 
-                var msg = if(aScore.toInt() > bScore.toInt()){
-                    "Team A is the winner"
-                }else {
-                    "Team B is the winner!"
-                }
-
-                var alertDialogue = AlertDialog.Builder(this)
-                alertDialogue.setMessage(msg)
-                    .setTitle("Who is the winner?")
-                    .setPositiveButton("ok", null)
-                    .show()
+                showWinnerPopup()
             }
         }
+    }
+
+    private fun updateScoreBoard() {
+        teamA_Score.text = "Team A: $aScore"
+        teamB_Score.text = "Team B: $bScore"
+    }
+
+    private fun showWinnerPopup() {
+        var msg = if (aScore.toInt() > bScore.toInt()) {
+            "Team A is the winner"
+        } else {
+            "Team B is the winner!"
+        }
+
+        var alertDialogue = AlertDialog.Builder(this)
+        alertDialogue.setMessage(msg)
+            .setTitle("Who is the winner?")
+            .setPositiveButton("ok", null)
+            .show()
     }
 }
